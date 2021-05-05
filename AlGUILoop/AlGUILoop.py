@@ -5,11 +5,17 @@ def PyQT5QTimer(guiElement, waitTime, callThis):
     from PyQt5.QtCore import QTimer
     QTimer.singleShot(waitTime, callThis)
 
+def PyQT6QTimer(guiElement, waitTime, callThis):
+    from PyQt6.QtCore import QTimer
+    QTimer.singleShot(waitTime, callThis)
+
 def anyTimer(guiElement, waitTime, callThis):
     if hasattr(guiElement, 'after'):
         tkinterafter(guiElement, waitTime, callThis)
-    elif hasattr(guiElement, 'pyqtConfigure'):
+    if hasattr(guiElement, 'pyqtConfigure'):
         PyQT5QTimer(guiElement, waitTime, callThis)
+    if hasattr(guiElement, 'pyqtConfigure'):
+        PyQT6QTimer(guiElement, waitTime, callThis)
     else:
         raise TypeError("Can not automatically detect which GUI this is.")
 
@@ -59,6 +65,10 @@ def qt5Loop(function):
     """a AlGUILoop for PyQT5"""
     return AlGUILoop(function, PyQT5QTimer)
 
+def qt6Loop(function):
+    """a AlGUILoop for PyQT6"""
+    return AlGUILoop(function, PyQT6Timer)
+
 class StopLoopException(Exception):
     """This is raised if the loop shall stop"""
     pass
@@ -69,4 +79,4 @@ def stopLoop(generator):
     try: generator.throw(StopLoopException())
     except StopLoopException: pass
 
-__all__ = ['AlGUILoop', 'stopLoop', 'StopLoopException', 'tkLoop', 'qt5Loop']
+__all__ = ['AlGUILoop', 'stopLoop', 'StopLoopException', 'tkLoop', 'qt5Loop', 'qt6Loop']
