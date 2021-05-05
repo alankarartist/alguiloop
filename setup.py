@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name="alguiloop",
-    version="1.0.1",
+    version="1.0.2",
     description="A Python package to use while and for loops without blocking the GUI. This is currently for Tkinter and PyQT.",
     long_description=readme(),
     long_description_content_type="text/markdown",

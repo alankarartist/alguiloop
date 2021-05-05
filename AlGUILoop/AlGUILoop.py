@@ -12,9 +12,8 @@ def PyQT6QTimer(guiElement, waitTime, callThis):
 def anyTimer(guiElement, waitTime, callThis):
     if hasattr(guiElement, 'after'):
         tkinterafter(guiElement, waitTime, callThis)
-    if hasattr(guiElement, 'pyqtConfigure'):
+    elif hasattr(guiElement, 'pyqtConfigure'):
         PyQT5QTimer(guiElement, waitTime, callThis)
-    if hasattr(guiElement, 'pyqtConfigure'):
         PyQT6QTimer(guiElement, waitTime, callThis)
     else:
         raise TypeError("Can not automatically detect which GUI this is.")
