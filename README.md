@@ -3,7 +3,8 @@ AlGUILoop to use while and for loops alongside without obstructing the GUI. This
 
 ## Installation
 You can install AlGUILoop from [PyPI](https://pypi.org/project/alguiloop/):
-```pip install alguiloop```
+```pip install alguiloop```.
+
 The AlGUILoop supports Python 3.6 and above.
 
 ## Usage
@@ -55,7 +56,8 @@ root.mainloop()
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still responsive. It shows how loops can be started and stopped when GUI is responsive.
+This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still responsive.
+It shows how loops can be started and stopped when GUI is responsive.
 # After running the script
 Switch ON
 Switch OFF
@@ -142,7 +144,8 @@ sys.exit(app.exec_())
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(PyQt5) is still responsive. It shows how loops can be started and stopped when GUI is responsive.
+This script uses a while loop that lets to toggle switch while the GUI(PyQt5) is still responsive.
+It shows how loops can be started and stopped when GUI is responsive.
 # After running the script
 Switch ON
 Switch OFF
@@ -234,7 +237,8 @@ sys.exit(app.exec_())
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(PyQt6) is still responsive. It shows how loops can be started and stopped when GUI is responsive.
+This script uses a while loop that lets to toggle switch while the GUI(PyQt6) is still responsive.
+It shows how loops can be started and stopped when GUI is responsive.
 # After running the script
 Switch ON
 Switch OFF
@@ -331,7 +335,8 @@ app.MainLoop()
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(wxPython) is still responsive. It shows how loops can be started and stopped when GUI is responsive.
+This script uses a while loop that lets to toggle switch while the GUI(wxPython) is still responsive.
+It shows how loops can be started and stopped when GUI is responsive.
 # After running the script
 Switch ON
 Switch OFF
