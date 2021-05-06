@@ -13,9 +13,15 @@ def wxCallLater(guiElement, waitTime, callThis):
     import wx
     wx.CallLater(waitTime, callThis)
 
+def pyformsQTimer(guiElement, waitTime, callThis):
+    from PyQt5.QtCore import QTimer
+    QTimer.singleShot(waitTime, callThis)
+
 def anyTimer(guiElement, waitTime, callThis):
     if hasattr(guiElement, 'after'):
         tkinterAfter(guiElement, waitTime, callThis)
+    elif hasattr(guiElement, 'visible'):
+        pyformsQTimer(guiElement, waitTime, callThis)
     elif hasattr(guiElement, 'pyqtConfigure'):
         pyQt5QTimer(guiElement, waitTime, callThis)
         pyQt6QTimer(guiElement, waitTime, callThis)
@@ -78,6 +84,10 @@ def wxLoop(function):
     """a AlGUILoop for wxPython"""
     return AlGUILoop(function, wxCallLater)
 
+def pyformsLoop(function):
+    """a AlGUILoop for wxPython"""
+    return AlGUILoop(function, pyformsQTimer)
+
 class StopLoopException(Exception):
     """This is raised if the loop shall stop"""
     pass
@@ -88,4 +98,4 @@ def stopLoop(generator):
     try: generator.throw(StopLoopException())
     except StopLoopException: pass
 
-__all__ = ['AlGUILoop', 'stopLoop', 'StopLoopException', 'tkLoop', 'qt5Loop', 'qt6Loop', 'wxLoop']
+__all__ = ['AlGUILoop', 'stopLoop', 'StopLoopException', 'tkLoop', 'qt5Loop', 'qt6Loop', 'wxLoop', 'pyformsLoop']

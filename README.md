@@ -11,8 +11,8 @@ The AlGUILoop supports Python 3.6 and above.
 There are following examples to use while and for loops alongside without obstructing the GUI using AlGUILoop :-
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still responsive.
-After running the script -
+This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still
+responsive. After running the script -
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -56,8 +56,8 @@ root.mainloop()
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still responsive.
-It shows how loops can be started and stopped when GUI is responsive.
+This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still
+responsive. It shows how loops can be started and stopped when GUI is responsive.
 After running the script -
 Switch ON
 Switch OFF
@@ -100,8 +100,8 @@ if __name__ == "__main__":
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(PyQt5) is still responsive.
-After running the script -
+This script uses a while loop that lets to toggle switch while the GUI(PyQt5) is still
+responsive. After running the script -
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -144,8 +144,8 @@ sys.exit(app.exec_())
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(PyQt5) is still responsive.
-It shows how loops can be started and stopped when GUI is responsive.
+This script uses a while loop that lets to toggle switch while the GUI(PyQt5) is still
+responsive. It shows how loops can be started and stopped when GUI is responsive.
 After running the script -
 Switch ON
 Switch OFF
@@ -193,8 +193,8 @@ if __name__ == "__main__" :
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(PyQt6) is still responsive.
-After running the script -
+This script uses a while loop that lets to toggle switch while the GUI(PyQt6) is still
+responsive. After running the script -
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -237,8 +237,8 @@ sys.exit(app.exec_())
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(PyQt6) is still responsive.
-It shows how loops can be started and stopped when GUI is responsive.
+This script uses a while loop that lets to toggle switch while the GUI(PyQt6) is still
+responsive. It shows how loops can be started and stopped when GUI is responsive.
 After running the script -
 Switch ON
 Switch OFF
@@ -286,8 +286,8 @@ if __name__ == "__main__" :
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(wxPython) is still responsive.
-After running the script
+This script uses a while loop that lets to toggle switch while the GUI(wxPython) is still
+responsive. After running the script -
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -335,9 +335,9 @@ app.MainLoop()
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(wxPython) is still responsive.
-It shows how loops can be started and stopped when GUI is responsive.
-After running the script
+This script uses a while loop that lets to toggle switch while the GUI(wxPython) is still
+responsive. It shows how loops can be started and stopped when GUI is responsive.
+After running the script -
 Switch ON
 Switch OFF
 Switch ON
@@ -378,6 +378,97 @@ class StartAndStoopLoop(wx.Frame):
 app = wx.App() 
 StartAndStoopLoop(None) 
 app.MainLoop()
+```
+```
+"""
+This script uses a while loop that lets to toggle switch while the GUI(PyForms-GUI) is still
+responsive. After running the script -
+ON: Switch 1
+ON: Switch 2
+ON: Switch 3
+OFF: Switch 1
+OFF: Switch 2
+OFF: Switch 3
+CLICKED
+ON: Switch 1
+ON: Switch 2
+ON: Switch 3
+OFF: Switch 1
+OFF: Switch 2
+OFF: Switch 3
+"""
+from pyforms import start_app
+from pyforms.basewidget import BaseWidget
+from pyforms.controls   import ControlButton
+from AlGUILoop.AlGUILoop import AlGUILoop
+
+class Toggle(BaseWidget):
+    def __init__(self, *args, **kwargs):
+        super().__init__('Computer vision algorithm example')
+        self.button  = ControlButton('CLICK')
+        self.button.value = self.click
+        self._formset = [ 'button']
+        self.toggleSwitch('Switch 1')
+        self.toggleSwitch('Switch 2')
+        self.toggleSwitch('Switch 3')
+    
+    def click(self):
+        print('CLICKED')
+
+    @AlGUILoop
+    def toggleSwitch(self,argument):
+        while 1:
+            print("ON: " + argument)
+            yield 0.5
+            print("OFF: " + argument)
+            yield 0.5
+        
+if __name__ == '__main__':
+    start_app(Toggle, geometry=(50, 70, 50, 20))
+```
+```
+"""
+This script uses a while loop that lets to toggle switch while the GUI(PyForms-GUI) is still
+responsive. It shows how loops can be started and stopped when GUI is responsive.
+After running the script -
+Switch ON
+Switch OFF
+Switch ON
+Switch OFF
+"""
+from pyforms import start_app
+from pyforms.basewidget import BaseWidget
+from pyforms.controls   import ControlButton
+from AlGUILoop.AlGUILoop import AlGUILoop, stopLoop
+
+class Toggle(BaseWidget):
+    def __init__(self, *args, **kwargs):
+        super().__init__('Computer vision algorithm example')
+        self.b1  = ControlButton('START')
+        self.b2  = ControlButton('STOP')
+        self.b1.value = self.start
+        self.b2.value = self.stop
+        self._formset = [ 
+            'b1',
+            'b2'
+        ]
+    
+    @AlGUILoop
+    def toggleSwitch(self):
+        while 1:
+            print("Switch ON")
+            yield 0.5 # time to wait
+            print("Switch OFF")
+            yield 0.5
+
+    def start(self):
+        self.generator = self.toggleSwitch()
+
+    def stop(self):
+        stopLoop(self.generator)
+        
+if __name__ == '__main__':
+    start_app(Toggle, geometry=(50, 70, 50, 40))
 ```
 
 ## License
