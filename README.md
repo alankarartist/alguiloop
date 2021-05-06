@@ -8,7 +8,7 @@ You can install AlGUILoop from [PyPI](https://pypi.org/project/alguiloop/):
 The AlGUILoop supports Python 3.6 and above.
 
 ## Usage
-There are following examples to use while and for loops alongside without obstructing the GUI using AlGUILoop:-
+There are following examples to use while and for loops alongside without obstructing the GUI using AlGUILoop :-
 ```
 """
 This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still responsive.
