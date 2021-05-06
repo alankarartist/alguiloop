@@ -12,7 +12,7 @@ There are following examples to use while and for loops alongside without obstru
 ```
 """
 This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still responsive.
-After running the script
+After running the script -
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -58,7 +58,7 @@ root.mainloop()
 """
 This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still responsive.
 It shows how loops can be started and stopped when GUI is responsive.
-# After running the script
+After running the script -
 Switch ON
 Switch OFF
 Switch ON
@@ -101,7 +101,7 @@ if __name__ == "__main__":
 ```
 """
 This script uses a while loop that lets to toggle switch while the GUI(PyQt5) is still responsive.
-After running the script
+After running the script -
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -146,7 +146,7 @@ sys.exit(app.exec_())
 """
 This script uses a while loop that lets to toggle switch while the GUI(PyQt5) is still responsive.
 It shows how loops can be started and stopped when GUI is responsive.
-# After running the script
+After running the script -
 Switch ON
 Switch OFF
 Switch ON
@@ -194,7 +194,7 @@ if __name__ == "__main__" :
 ```
 """
 This script uses a while loop that lets to toggle switch while the GUI(PyQt6) is still responsive.
-After running the script
+After running the script -
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -239,7 +239,7 @@ sys.exit(app.exec_())
 """
 This script uses a while loop that lets to toggle switch while the GUI(PyQt6) is still responsive.
 It shows how loops can be started and stopped when GUI is responsive.
-# After running the script
+After running the script -
 Switch ON
 Switch OFF
 Switch ON
@@ -337,7 +337,7 @@ app.MainLoop()
 """
 This script uses a while loop that lets to toggle switch while the GUI(wxPython) is still responsive.
 It shows how loops can be started and stopped when GUI is responsive.
-# After running the script
+After running the script
 Switch ON
 Switch OFF
 Switch ON
