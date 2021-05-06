@@ -1,5 +1,5 @@
 # AlGUILoop
-AlGUILoop is to use while and for loops without blocking the GUI. This is currently for Tkinter and PyQT.
+AlGUILoop to use while and for loops alongside without obstructing the GUI. This is currently for tkinter, PyQt5, PyQt6 and wxPython.
 
 ## Installation
 You can install AlGUILoop from [PyPI](https://pypi.org/project/alguiloop/):
@@ -7,11 +7,11 @@ You can install AlGUILoop from [PyPI](https://pypi.org/project/alguiloop/):
 The AlGUILoop supports Python 3.6 and above.
 
 ## Usage
-There are following examples to use while and for loops without blocking the GUI using AlGUILoop:-
+There are following examples to use while and for loops alongside without obstructing the GUI using AlGUILoop:-
 ```
 """
 This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still responsive.
-Running this script outputs
+After running the script
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -56,7 +56,7 @@ root.mainloop()
 ```
 """
 This script uses a while loop that lets to toggle switch while the GUI(tkinter) is still responsive. It shows how loops can be started and stopped when GUI is responsive.
-# Running this script outputs
+# After running the script
 Switch ON
 Switch OFF
 Switch ON
@@ -99,7 +99,7 @@ if __name__ == "__main__":
 ```
 """
 This script uses a while loop that lets to toggle switch while the GUI(PyQt5) is still responsive.
-Running this script outputs
+After running the script
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -143,7 +143,7 @@ sys.exit(app.exec_())
 ```
 """
 This script uses a while loop that lets to toggle switch while the GUI(PyQt5) is still responsive. It shows how loops can be started and stopped when GUI is responsive.
-# Running this script outputs
+# After running the script
 Switch ON
 Switch OFF
 Switch ON
@@ -191,7 +191,7 @@ if __name__ == "__main__" :
 ```
 """
 This script uses a while loop that lets to toggle switch while the GUI(PyQt6) is still responsive.
-Running this script outputs
+After running the script
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -235,7 +235,7 @@ sys.exit(app.exec_())
 ```
 """
 This script uses a while loop that lets to toggle switch while the GUI(PyQt6) is still responsive. It shows how loops can be started and stopped when GUI is responsive.
-# Running this script outputs
+# After running the script
 Switch ON
 Switch OFF
 Switch ON
@@ -280,7 +280,102 @@ if __name__ == "__main__" :
     window = StartAndStoopLoop() 
     sys.exit(App.exec()) 
 ```
+```
+"""
+This script uses a while loop that lets to toggle switch while the GUI(wxPython) is still responsive.
+After running the script
+ON: Switch 1
+ON: Switch 2
+ON: Switch 3
+OFF: Switch 3
+OFF: Switch 2
+OFF: Switch 1
+ON: Switch 2
+ON: Switch 3
+ON: Switch 1
+CLICKED
+OFF: Switch 3
+OFF: Switch 2
+OFF: Switch 1
+"""
+import wx
+from AlGUILoop.AlGUILoop import AlGUILoop
+
+@AlGUILoop
+def toggleSwitch(argument):
+    while 1:
+        print("ON: " + argument)
+        yield 0.5 # time to wait
+        print("OFF: " + argument)
+        yield 0.5
+
+def click(event):
+    print('CLICKED')
+
+app = wx.App()
+frame = wx.Frame(None, size = (50,60))
+panel = wx.Panel(frame)
+gridSizer = wx.GridSizer(1, 1, 0, 0)
+button = wx.Button(panel, label = 'CLICK')
+button.Bind(wx.EVT_BUTTON, click)
+gridSizer.Add(button, 0, wx.EXPAND)
+panel.SetSizer(gridSizer)
+frame.Show()
+
+# you can run several loops at once:
+toggleSwitch(frame, 'Switch 1')
+toggleSwitch(frame, 'Switch 2')
+toggleSwitch(frame, 'Switch 3')
+
+app.MainLoop()
+```
+```
+"""
+This script uses a while loop that lets to toggle switch while the GUI(wxPython) is still responsive. It shows how loops can be started and stopped when GUI is responsive.
+# After running the script
+Switch ON
+Switch OFF
+Switch ON
+Switch OFF
+"""
+import wx
+from AlGUILoop.AlGUILoop import AlGUILoop, stopLoop
+
+class StartAndStoopLoop(wx.Frame):
+    def __init__(self, parent):
+        super(StartAndStoopLoop, self).__init__(parent, size = (50,100))
+        panel = wx.Panel(self)
+        gridSizer = wx.GridSizer(2,1,0,0)
+        b1 = wx.Button(panel, label='START')
+        b2 = wx.Button(panel, label='STOP')
+        b1.Bind(wx.EVT_BUTTON, self.start)
+        b2.Bind(wx.EVT_BUTTON, self.stop)
+        gridSizer.Add(b1,0,wx.EXPAND)
+        gridSizer.Add(b2,0,wx.EXPAND)
+        panel.SetSizer(gridSizer)
+        self.Centre()
+        self.Show()
+
+    @AlGUILoop
+    def toggleSwitch(self):
+        while 1:
+            print("Switch ON")
+            yield 0.5 # time to wait
+            print("Switch OFF")
+            yield 0.5
+
+    def start(self,event):
+        self.generator = self.toggleSwitch()
+
+    def stop(self,event):
+        stopLoop(self.generator)
+
+app = wx.App() 
+StartAndStoopLoop(None) 
+app.MainLoop()
+```
 
 ## License
-Copyright 2021 Alankar Singh
+&copy; 2021 Alankar Singh
+
 This repository is licensed under the MIT license. See LICENSE for details.

@@ -1,20 +1,26 @@
-def tkinterafter(guiElement, waitTime, callThis):
+def tkinterAfter(guiElement, waitTime, callThis):
     guiElement.after(waitTime, callThis)
 
-def PyQT5QTimer(guiElement, waitTime, callThis):
+def pyQt5QTimer(guiElement, waitTime, callThis):
     from PyQt5.QtCore import QTimer
     QTimer.singleShot(waitTime, callThis)
 
-def PyQT6QTimer(guiElement, waitTime, callThis):
+def pyQt6QTimer(guiElement, waitTime, callThis):
     from PyQt6.QtCore import QTimer
     QTimer.singleShot(waitTime, callThis)
 
+def wxCallLater(guiElement, waitTime, callThis):
+    import wx
+    wx.CallLater(waitTime, callThis)
+
 def anyTimer(guiElement, waitTime, callThis):
     if hasattr(guiElement, 'after'):
-        tkinterafter(guiElement, waitTime, callThis)
+        tkinterAfter(guiElement, waitTime, callThis)
     elif hasattr(guiElement, 'pyqtConfigure'):
-        PyQT5QTimer(guiElement, waitTime, callThis)
-        PyQT6QTimer(guiElement, waitTime, callThis)
+        pyQt5QTimer(guiElement, waitTime, callThis)
+        pyQt6QTimer(guiElement, waitTime, callThis)
+    elif hasattr(guiElement, 'GetClassName'):
+        wxCallLater(guiElement, waitTime, callThis)
     else:
         raise TypeError("Can not automatically detect which GUI this is.")
 
@@ -58,15 +64,19 @@ class AlGUILoop(object):
 
 def tkLoop(function):
     """a AlGUILoop for tkinter"""
-    return AlGUILoop(function, tkinterafter)
+    return AlGUILoop(function, tkinterAfter)
 
 def qt5Loop(function):
     """a AlGUILoop for PyQT5"""
-    return AlGUILoop(function, PyQT5QTimer)
+    return AlGUILoop(function, pyQt5QTimer)
 
 def qt6Loop(function):
     """a AlGUILoop for PyQT6"""
-    return AlGUILoop(function, PyQT6Timer)
+    return AlGUILoop(function, pyQt6QTimer)
+
+def wxLoop(function):
+    """a AlGUILoop for wxPython"""
+    return AlGUILoop(function, wxCallLater)
 
 class StopLoopException(Exception):
     """This is raised if the loop shall stop"""
@@ -78,4 +88,4 @@ def stopLoop(generator):
     try: generator.throw(StopLoopException())
     except StopLoopException: pass
 
-__all__ = ['AlGUILoop', 'stopLoop', 'StopLoopException', 'tkLoop', 'qt5Loop', 'qt6Loop']
+__all__ = ['AlGUILoop', 'stopLoop', 'StopLoopException', 'tkLoop', 'qt5Loop', 'qt6Loop', 'wxLoop']
