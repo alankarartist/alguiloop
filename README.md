@@ -1,5 +1,5 @@
 # AlGUILoop
-AlGUILoop to use while and for loops alongside without obstructing the GUI. This is currently for tkinter, PyQt5, PyQt6 and wxPython.
+AlGUILoop allows to use while and for loops alongside without obstructing the GUI. This is currently for tkinter, PyQt5, PyQt6 and wxPython.
 
 ## Installation
 You can install AlGUILoop from [PyPI](https://pypi.org/project/alguiloop/):
