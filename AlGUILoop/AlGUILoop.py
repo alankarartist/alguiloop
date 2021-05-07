@@ -17,6 +17,10 @@ def pyformsQTimer(guiElement, waitTime, callThis):
     from PyQt5.QtCore import QTimer
     QTimer.singleShot(waitTime, callThis)
 
+def pySide2QTimer(guiElement, waitTime, callThis):
+    from PySide2.QtCore import QTimer
+    QTimer.singleShot(waitTime, callThis)
+
 def anyTimer(guiElement, waitTime, callThis):
     if hasattr(guiElement, 'after'):
         tkinterAfter(guiElement, waitTime, callThis)
@@ -27,8 +31,10 @@ def anyTimer(guiElement, waitTime, callThis):
         pyQt6QTimer(guiElement, waitTime, callThis)
     elif hasattr(guiElement, 'GetClassName'):
         wxCallLater(guiElement, waitTime, callThis)
+    elif hasattr(guiElement, 'registerUserData'):
+        pySide2QTimer(guiElement, waitTime, callThis)
     else:
-        raise TypeError("Can not automatically detect which GUI this is.")
+        raise TypeError("Unable to detect GUI automatically")
 
 def loopGUI(guiElement, generator, startGUI):
     try:
@@ -42,9 +48,8 @@ def loopGUI(guiElement, generator, startGUI):
             waitTime = 0
         else:
             # yield seconds
-            waitTime = int(waitTime * 1000) # Tkinter works with milli seconds
-        callThisAgain = lambda: loopGUI(guiElement, generator,
-                                                   startGUI)
+            waitTime = int(waitTime * 1000) # tkinter works with milli seconds
+        callThisAgain = lambda: loopGUI(guiElement, generator, startGUI)
         startGUI(guiElement, waitTime, callThisAgain)
 
 class AlGUILoop(object):
@@ -73,11 +78,11 @@ def tkLoop(function):
     return AlGUILoop(function, tkinterAfter)
 
 def qt5Loop(function):
-    """a AlGUILoop for PyQT5"""
+    """a AlGUILoop for PyQt5"""
     return AlGUILoop(function, pyQt5QTimer)
 
 def qt6Loop(function):
-    """a AlGUILoop for PyQT6"""
+    """a AlGUILoop for PyQt6"""
     return AlGUILoop(function, pyQt6QTimer)
 
 def wxLoop(function):
@@ -85,8 +90,12 @@ def wxLoop(function):
     return AlGUILoop(function, wxCallLater)
 
 def pyformsLoop(function):
-    """a AlGUILoop for wxPython"""
+    """a AlGUILoop for PyForms-GUI"""
     return AlGUILoop(function, pyformsQTimer)
+
+def pyside2Loop(function):
+    """a AlGUILoop for PySide2"""
+    return AlGUILoop(function, pySide2QTimer)
 
 class StopLoopException(Exception):
     """This is raised if the loop shall stop"""
@@ -98,4 +107,4 @@ def stopLoop(generator):
     try: generator.throw(StopLoopException())
     except StopLoopException: pass
 
-__all__ = ['AlGUILoop', 'stopLoop', 'StopLoopException', 'tkLoop', 'qt5Loop', 'qt6Loop', 'wxLoop', 'pyformsLoop']
+__all__ = ['AlGUILoop', 'stopLoop', 'StopLoopException', 'tkLoop', 'qt5Loop', 'qt6Loop', 'wxLoop', 'pyformsLoop', 'pyside2Loop']

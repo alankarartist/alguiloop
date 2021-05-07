@@ -1,5 +1,5 @@
 # AlGUILoop
-AlGUILoop allows to use while and for loops alongside without obstructing the GUI. This is currently for tkinter, PyQt5, PyQt6 and wxPython.
+AlGUILoop allows to use while and for loops alongside without obstructing the GUI. This is currently for tkinter, PyQt5, PyQt6, wxPython, PyForms-GUI and PySide2.
 
 ## Installation
 You can install AlGUILoop from [PyPI](https://pypi.org/project/alguiloop/):
@@ -381,8 +381,8 @@ app.MainLoop()
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(PyForms-GUI) is still
-responsive. After running the script -
+This script uses a while loop that lets to toggle switch while the GUI(PyForms-GUI) is
+still responsive. After running the script -
 ON: Switch 1
 ON: Switch 2
 ON: Switch 3
@@ -428,8 +428,8 @@ if __name__ == '__main__':
 ```
 ```
 """
-This script uses a while loop that lets to toggle switch while the GUI(PyForms-GUI) is still
-responsive. It shows how loops can be started and stopped when GUI is responsive.
+This script uses a while loop that lets to toggle switch while the GUI(PyForms-GUI) is
+still responsive. It shows how loops can be started and stopped when GUI is responsive.
 After running the script -
 Switch ON
 Switch OFF
@@ -441,7 +441,7 @@ from pyforms.basewidget import BaseWidget
 from pyforms.controls   import ControlButton
 from AlGUILoop.AlGUILoop import AlGUILoop, stopLoop
 
-class Toggle(BaseWidget):
+class StartAndStoopLoop(BaseWidget):
     def __init__(self, *args, **kwargs):
         super().__init__('Computer vision algorithm example')
         self.b1  = ControlButton('START')
@@ -468,7 +468,100 @@ class Toggle(BaseWidget):
         stopLoop(self.generator)
         
 if __name__ == '__main__':
-    start_app(Toggle, geometry=(50, 70, 50, 40))
+    start_app(StartAndStoopLoop, geometry=(50, 70, 50, 40))
+```
+```
+"""
+This script uses a while loop that lets to toggle switch while the GUI(PySide2) is still
+responsive. After running the script -
+ON: Switch 1
+ON: Switch 2
+ON: Switch 3
+OFF: Switch 1
+OFF: Switch 2
+OFF: Switch 3
+CLICKED
+ON: Switch 1
+ON: Switch 2
+ON: Switch 3
+"""
+from PySide2 import QtWidgets
+import sys
+from AlGUILoop.AlGUILoop import AlGUILoop
+
+@AlGUILoop
+def toggleSwitch(argument):
+    while 1:
+        print("ON: " + argument)
+        yield 0.5 # time to wait
+        print("OFF: " + argument)
+        yield 0.5
+
+app = QtWidgets.QApplication(sys.argv)
+
+# add a responsive button
+def click():
+    print('CLICKED')
+window = QtWidgets.QPushButton()
+window.setText('CLICK')
+window.clicked.connect(click)
+window.show()
+
+# you can run several loops at once:
+toggleSwitch(window, 'Switch 1')
+toggleSwitch(window, 'Switch 2')
+toggleSwitch(window, 'Switch 3')
+
+sys.exit(app.exec_())
+```
+```
+"""
+This script uses a while loop that lets to toggle switch while the GUI(PySide2) is still
+responsive. It shows how loops can be started and stopped when GUI is responsive.
+After running the script -
+Switch ON
+Switch OFF
+Switch ON
+Switch OFF
+"""
+from PySide2.QtWidgets import *
+import sys
+from AlGUILoop.AlGUILoop import AlGUILoop, stopLoop 
+
+class StartAndStoopLoop(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.w = QVBoxLayout(self)
+        self.w.setContentsMargins(2, 2, 2, 2)
+        self.w.setSpacing(0)
+        self.w1 = QPushButton()
+        self.w2 = QPushButton()
+        self.w1.setText('START')
+        self.w2.setText('STOP')
+        self.w.addWidget(self.w1)
+        self.w.addWidget(self.w2)
+        self.w1.clicked.connect(self.start)
+        self.w2.clicked.connect(self.stop)
+        self.show()
+
+    @AlGUILoop
+    def toggleSwitch(self):
+        while 1:
+            print("Switch ON")
+            yield 0.5 # time to wait
+            print("Switch OFF")
+            yield 0.5
+
+    def start(self):
+        self.generator = self.toggleSwitch()
+
+    def stop(self):
+        stopLoop(self.generator)
+
+if __name__ == "__main__" : 
+    App = QApplication(sys.argv) 
+    window = StartAndStoopLoop() 
+    sys.exit(App.exec_()) 
 ```
 
 ## License
